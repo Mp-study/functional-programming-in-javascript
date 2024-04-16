@@ -71,9 +71,57 @@ const name = p => p.fullname;
 
 ### 3.3.2 _.map: 데이터를 변환
 
+```tsx
+function map(arr, fn) {
+	const len = arr.length,
+				result = new Array(len);
+	
+	for(let idx = 0; idx < len; ++idx) {
+		result[idx] = fn(arr[idx], idx, arr)
+	}
+	
+	return result;
+}
+```
+
+map이 반복을 대행하는 덕분에 개발자는 루프 변수를 하나씩 늘리며 경계 조건을 체크하는 등의 따분한 일은 이 함수에게 맡기고 이터레이터 함수에 구현한 비즈니스 로직만 신경쓰면 됩니다.
+
 ### 3.3.3 _.reduce: 결과를 수집
 
+```tsx
+function reduce(arr, fn, accumulator) {
+	let idx = -1,
+			len = arr.length;
+			
+	if(!accumulator && len > 0) {
+		accumulator = arr[++idx];
+	}
+	
+	while(++idx < len) {
+		accumulator = fn(accumulator, arr[idx], idx, arr);
+	}
+	
+	return accumulator;
+}
+```
+
 ### 3.3.4 _.filter: 원하지 않는 원소를 제거
+
+```tsx
+function filter(arr, predicate) {
+	let idx = -1,
+			len = arr.length,
+			result = [];
+			
+	while(++idx < len) {
+		let value = arr[idx];
+		if(predicate(value, idx, this)) {
+			result.push(value)
+		}
+	}
+	return result;
+}
+```
 
 ## 3.4 코드 헤아리기
 
